@@ -38,12 +38,14 @@
             // lvwMasalar
             // 
             this.lvwMasalar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvwMasalar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lvwMasalar.Location = new System.Drawing.Point(0, 25);
             this.lvwMasalar.Margin = new System.Windows.Forms.Padding(4);
             this.lvwMasalar.Name = "lvwMasalar";
             this.lvwMasalar.Size = new System.Drawing.Size(724, 537);
             this.lvwMasalar.TabIndex = 0;
             this.lvwMasalar.UseCompatibleStateImageBehavior = false;
+            this.lvwMasalar.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvwMasalar_MouseDoubleClick);
             // 
             // menuStrip1
             // 
@@ -68,6 +70,7 @@
             this.tsmiGecmisSiparisler.Name = "tsmiGecmisSiparisler";
             this.tsmiGecmisSiparisler.Size = new System.Drawing.Size(108, 19);
             this.tsmiGecmisSiparisler.Text = "Geçmiş Siparişler";
+            this.tsmiGecmisSiparisler.Click += new System.EventHandler(this.tsmiGecmisSiparisler_Click);
             // 
             // Form1
             // 

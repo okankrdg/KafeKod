@@ -32,10 +32,6 @@
             this.nudAdet = new System.Windows.Forms.NumericUpDown();
             this.btnEkle = new System.Windows.Forms.Button();
             this.dgvSiparisDetaylari = new System.Windows.Forms.DataGridView();
-            this.UrunAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BirimFiyat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Adet = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cboMasaNo = new System.Windows.Forms.ComboBox();
             this.btnOdemeAl = new System.Windows.Forms.Button();
             this.btnSiparisIptal = new System.Windows.Forms.Button();
@@ -46,12 +42,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblMasaNo = new System.Windows.Forms.Label();
             this.lblTutar = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudAdet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSiparisDetaylari)).BeginInit();
             this.SuspendLayout();
             // 
             // cboUrun
             // 
+            this.cboUrun.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUrun.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.cboUrun.FormattingEnabled = true;
             this.cboUrun.Location = new System.Drawing.Point(13, 44);
@@ -65,9 +63,19 @@
             this.nudAdet.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.nudAdet.Location = new System.Drawing.Point(177, 43);
             this.nudAdet.Margin = new System.Windows.Forms.Padding(4);
+            this.nudAdet.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.nudAdet.Name = "nudAdet";
             this.nudAdet.Size = new System.Drawing.Size(123, 29);
             this.nudAdet.TabIndex = 1;
+            this.nudAdet.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // btnEkle
             // 
@@ -79,43 +87,25 @@
             this.btnEkle.TabIndex = 2;
             this.btnEkle.Text = "EKLE";
             this.btnEkle.UseVisualStyleBackColor = true;
+            this.btnEkle.Click += new System.EventHandler(this.btnEkle_Click);
             // 
             // dgvSiparisDetaylari
             // 
+            this.dgvSiparisDetaylari.AllowUserToAddRows = false;
+            this.dgvSiparisDetaylari.AllowUserToDeleteRows = false;
             this.dgvSiparisDetaylari.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvSiparisDetaylari.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvSiparisDetaylari.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             this.dgvSiparisDetaylari.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSiparisDetaylari.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.UrunAd,
-            this.BirimFiyat,
-            this.Adet,
-            this.Tutar});
             this.dgvSiparisDetaylari.Location = new System.Drawing.Point(13, 82);
             this.dgvSiparisDetaylari.Margin = new System.Windows.Forms.Padding(4);
             this.dgvSiparisDetaylari.Name = "dgvSiparisDetaylari";
+            this.dgvSiparisDetaylari.ReadOnly = true;
+            this.dgvSiparisDetaylari.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSiparisDetaylari.Size = new System.Drawing.Size(440, 541);
             this.dgvSiparisDetaylari.TabIndex = 3;
-            // 
-            // UrunAd
-            // 
-            this.UrunAd.HeaderText = "Ürün Ad";
-            this.UrunAd.Name = "UrunAd";
-            // 
-            // BirimFiyat
-            // 
-            this.BirimFiyat.HeaderText = "Birim Fiyat(TL)";
-            this.BirimFiyat.Name = "BirimFiyat";
-            // 
-            // Adet
-            // 
-            this.Adet.HeaderText = "Adet";
-            this.Adet.Name = "Adet";
-            // 
-            // Tutar
-            // 
-            this.Tutar.HeaderText = "Tutar(TL)";
-            this.Tutar.Name = "Tutar";
             // 
             // cboMasaNo
             // 
@@ -140,6 +130,7 @@
             this.btnOdemeAl.TabIndex = 5;
             this.btnOdemeAl.Text = "ÖDEME AL";
             this.btnOdemeAl.UseVisualStyleBackColor = false;
+            this.btnOdemeAl.Click += new System.EventHandler(this.btnOdemeAl_Click);
             // 
             // btnSiparisIptal
             // 
@@ -153,6 +144,7 @@
             this.btnSiparisIptal.TabIndex = 6;
             this.btnSiparisIptal.Text = "SİPARİŞ İPTAL";
             this.btnSiparisIptal.UseVisualStyleBackColor = false;
+            this.btnSiparisIptal.Click += new System.EventHandler(this.btnSiparisIptal_Click);
             // 
             // btnAnaSayfa
             // 
@@ -166,6 +158,7 @@
             this.btnAnaSayfa.TabIndex = 7;
             this.btnAnaSayfa.Text = "ANASAYFAYA DÖN";
             this.btnAnaSayfa.UseVisualStyleBackColor = true;
+            this.btnAnaSayfa.Click += new System.EventHandler(this.btnAnaSayfa_Click);
             // 
             // label1
             // 
@@ -229,17 +222,29 @@
             this.lblTutar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTutar.AutoSize = true;
             this.lblTutar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTutar.Location = new System.Drawing.Point(517, 384);
+            this.lblTutar.Location = new System.Drawing.Point(643, 386);
             this.lblTutar.Name = "lblTutar";
-            this.lblTutar.Size = new System.Drawing.Size(198, 24);
+            this.lblTutar.Size = new System.Drawing.Size(72, 24);
             this.lblTutar.TabIndex = 15;
-            this.lblTutar.Text = "Ödeme Tutarı: 0.00 TL";
+            this.lblTutar.Text = "0.00 TL";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label4.Location = new System.Drawing.Point(485, 386);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(131, 24);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Ödeme Tutarı:";
             // 
             // SiparisForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(783, 636);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.lblTutar);
             this.Controls.Add(this.lblMasaNo);
             this.Controls.Add(this.label3);
@@ -281,10 +286,7 @@
         private System.Windows.Forms.Button btnTasi;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblMasaNo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UrunAd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BirimFiyat;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Adet;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tutar;
         private System.Windows.Forms.Label lblTutar;
+        private System.Windows.Forms.Label label4;
     }
 }
