@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.cboUrun = new System.Windows.Forms.ComboBox();
             this.nudAdet = new System.Windows.Forms.NumericUpDown();
             this.btnEkle = new System.Windows.Forms.Button();
@@ -43,8 +44,11 @@
             this.lblMasaNo = new System.Windows.Forms.Label();
             this.lblTutar = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.cmsSiparisDetay = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiSiparisDetaySil = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.nudAdet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSiparisDetaylari)).BeginInit();
+            this.cmsSiparisDetay.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboUrun
@@ -56,6 +60,7 @@
             this.cboUrun.Margin = new System.Windows.Forms.Padding(4);
             this.cboUrun.Name = "cboUrun";
             this.cboUrun.Size = new System.Drawing.Size(152, 28);
+            this.cboUrun.Sorted = true;
             this.cboUrun.TabIndex = 0;
             // 
             // nudAdet
@@ -106,10 +111,12 @@
             this.dgvSiparisDetaylari.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSiparisDetaylari.Size = new System.Drawing.Size(440, 541);
             this.dgvSiparisDetaylari.TabIndex = 3;
+            this.dgvSiparisDetaylari.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvSiparisDetaylari_MouseClick);
             // 
             // cboMasaNo
             // 
             this.cboMasaNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboMasaNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMasaNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.cboMasaNo.FormattingEnabled = true;
             this.cboMasaNo.Location = new System.Drawing.Point(465, 43);
@@ -191,6 +198,7 @@
             this.btnTasi.TabIndex = 10;
             this.btnTasi.Text = "TAŞI";
             this.btnTasi.UseVisualStyleBackColor = true;
+            this.btnTasi.Click += new System.EventHandler(this.btnTasi_Click);
             // 
             // label3
             // 
@@ -239,6 +247,20 @@
             this.label4.TabIndex = 16;
             this.label4.Text = "Ödeme Tutarı:";
             // 
+            // cmsSiparisDetay
+            // 
+            this.cmsSiparisDetay.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiSiparisDetaySil});
+            this.cmsSiparisDetay.Name = "cmsSiparisDetay";
+            this.cmsSiparisDetay.Size = new System.Drawing.Size(87, 26);
+            // 
+            // tsmiSiparisDetaySil
+            // 
+            this.tsmiSiparisDetaySil.Name = "tsmiSiparisDetaySil";
+            this.tsmiSiparisDetaySil.Size = new System.Drawing.Size(86, 22);
+            this.tsmiSiparisDetaySil.Text = "Sil";
+            this.tsmiSiparisDetaySil.Click += new System.EventHandler(this.tsmiSiparisDetaySil_Click);
+            // 
             // SiparisForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -266,6 +288,7 @@
             this.Text = "SiparisForm";
             ((System.ComponentModel.ISupportInitialize)(this.nudAdet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSiparisDetaylari)).EndInit();
+            this.cmsSiparisDetay.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,5 +311,7 @@
         private System.Windows.Forms.Label lblMasaNo;
         private System.Windows.Forms.Label lblTutar;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ContextMenuStrip cmsSiparisDetay;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSiparisDetaySil;
     }
 }

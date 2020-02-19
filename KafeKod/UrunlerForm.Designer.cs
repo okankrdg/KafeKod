@@ -33,9 +33,9 @@
             this.btnEkle = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvUrunler = new System.Windows.Forms.DataGridView();
-            this.UrunAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BirimFiyat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
+            this.clmUrunAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmBirimFiyat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.nudBirimFiyat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUrunler)).BeginInit();
             this.SuspendLayout();
@@ -69,6 +69,7 @@
             this.btnEkle.TabIndex = 2;
             this.btnEkle.Text = "EKLE";
             this.btnEkle.UseVisualStyleBackColor = true;
+            this.btnEkle.Click += new System.EventHandler(this.btnEkle_Click);
             // 
             // label1
             // 
@@ -86,25 +87,20 @@
             this.dgvUrunler.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvUrunler.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvUrunler.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvUrunler.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUrunler.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.UrunAd,
-            this.BirimFiyat});
+            this.clmUrunAd,
+            this.clmBirimFiyat});
             this.dgvUrunler.Location = new System.Drawing.Point(17, 69);
             this.dgvUrunler.Margin = new System.Windows.Forms.Padding(4);
             this.dgvUrunler.Name = "dgvUrunler";
+            this.dgvUrunler.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUrunler.Size = new System.Drawing.Size(459, 481);
             this.dgvUrunler.TabIndex = 4;
-            // 
-            // UrunAd
-            // 
-            this.UrunAd.HeaderText = "Ürün Ad";
-            this.UrunAd.Name = "UrunAd";
-            // 
-            // BirimFiyat
-            // 
-            this.BirimFiyat.HeaderText = "Birim Fiyat";
-            this.BirimFiyat.Name = "BirimFiyat";
+            this.dgvUrunler.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvUrunler_CellValidating);
+            this.dgvUrunler.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvUrunler_DataError);
             // 
             // label2
             // 
@@ -116,6 +112,18 @@
             this.label2.Size = new System.Drawing.Size(105, 24);
             this.label2.TabIndex = 5;
             this.label2.Text = "Birim Fiyati:";
+            // 
+            // clmUrunAd
+            // 
+            this.clmUrunAd.DataPropertyName = "UrunAd";
+            this.clmUrunAd.HeaderText = "Ürün Adı";
+            this.clmUrunAd.Name = "clmUrunAd";
+            // 
+            // clmBirimFiyat
+            // 
+            this.clmBirimFiyat.DataPropertyName = "BirimFiyat";
+            this.clmBirimFiyat.HeaderText = "Birim Fiyatı";
+            this.clmBirimFiyat.Name = "clmBirimFiyat";
             // 
             // UrunlerForm
             // 
@@ -147,7 +155,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgvUrunler;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UrunAd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BirimFiyat;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmUrunAd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmBirimFiyat;
     }
 }

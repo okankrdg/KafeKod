@@ -1,9 +1,11 @@
 ﻿using KafeKod.Data;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,19 +16,35 @@ namespace KafeKod
     public partial class Form1 : Form
     {
         KafeVeri db;
-        int masaAdet = 20;
+        
         public Form1()
         {
-            db = new KafeVeri();
+            VerileriOku();
             
-            OrnekVerileriYukle();
+            
             InitializeComponent();
             MasalariOlustur();
+            
+        }
+
+        private void VerileriOku()
+        {
+            try
+            {
+                string json = File.ReadAllText("veri.json");
+                db = JsonConvert.DeserializeObject<KafeVeri>(json);
+            }
+            catch (Exception)
+            {
+
+                db = new KafeVeri();
+            }
         }
 
         private void OrnekVerileriYukle()
         {
             db.Urunler = new List<Urun> { new Urun { UrunAd = "Kola", BirimFiyat = 6.99m }, new Urun { UrunAd = "Çay", BirimFiyat = 2.99m } };
+            db.Urunler.Sort();
         }
 
         private void MasalariOlustur()
@@ -40,11 +58,22 @@ namespace KafeKod
 
             #endregion
             ListViewItem lvi = new ListViewItem();
-            for (int i = 1; i <= masaAdet; i++)
+            for (int i = 1; i <= db.MasaAdet; i++)
             {
                 lvi = new ListViewItem("Masa" + i);
-                lvi.Tag = i;
-                lvi.ImageKey = "boş";
+                //i masa noyla kayıtlı masa no var mi
+                Siparis sip = db.AktifSiparisler.FirstOrDefault(x => x.MasaNo == i);
+                if (sip == null)
+                {
+                    lvi.Tag = i;
+                    lvi.ImageKey = "boş";
+
+                }
+                else
+                {
+                    lvi.Tag = sip;
+                    lvi.ImageKey = "dolu";
+                }
                 lvwMasalar.Items.Add(lvi);
             }
             
@@ -71,8 +100,9 @@ namespace KafeKod
                     lvi.Tag = sip;
                     db.AktifSiparisler.Add(sip);
                 }
-
+                //sipariş formu oluşma anı
                 SiparisForm frmSiparis = new SiparisForm(db,sip);
+                frmSiparis.MasaTasindi += FrmSiparis_MasaTasindi;
                 frmSiparis.ShowDialog();
                 if (sip.Durum!=SiparisDurum.Aktif)
                 {
@@ -84,10 +114,44 @@ namespace KafeKod
             }
         }
 
+        private void FrmSiparis_MasaTasindi(object sender, MasaTasimaEventArgs e)
+        {
+            ListViewItem lviEskiMasa = null;
+            foreach (ListViewItem item in lvwMasalar.Items)
+            {
+                if (item.Tag==e.TasinanSiparis)
+                {
+                    lviEskiMasa = item;
+                    break;
+                }
+            }
+            lviEskiMasa.Tag = e.EskiMasaNo;
+            lviEskiMasa.ImageKey = "boş";
+        }
+
         private void tsmiGecmisSiparisler_Click(object sender, EventArgs e)
         {
             var frm = new GecmisSiparislerForm(db);
             frm.ShowDialog();
         }
+
+        private void tsmiUrunler_Click(object sender, EventArgs e)
+        {
+            var frm = new UrunlerForm(db);
+            frm.ShowDialog();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            string json=JsonConvert.SerializeObject(db);
+            File.WriteAllText("veri.json", json);
+        }
+        //public void MasaTasi(int kaynakNo,int hedefNo)
+        //{
+        //    lvwMasalar.Items[kaynakNo].ImageKey = "bos";
+        //    lvwMasalar.Items[kaynakNo].Tag = hedefNo;
+        //    lvwMasalar.Items[hedefNo].ImageKey = "dolu";
+        //    lvwMasalar.Items[hedefNo].Tag = kaynakNo;
+        //}
     }
 }
