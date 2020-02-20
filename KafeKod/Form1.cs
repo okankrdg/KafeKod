@@ -25,6 +25,7 @@ namespace KafeKod
             InitializeComponent();
             MasalariOlustur();
             
+            
         }
 
         private void VerileriOku()
@@ -102,7 +103,7 @@ namespace KafeKod
                 }
                 //sipariş formu oluşma anı
                 SiparisForm frmSiparis = new SiparisForm(db,sip);
-                frmSiparis.MasaTasindi += FrmSiparis_MasaTasindi;
+                frmSiparis.MasaTasinyor += FrmSiparis_MasaTasindi;
                 frmSiparis.ShowDialog();
                 if (sip.Durum!=SiparisDurum.Aktif)
                 {
@@ -116,17 +117,14 @@ namespace KafeKod
 
         private void FrmSiparis_MasaTasindi(object sender, MasaTasimaEventArgs e)
         {
-            ListViewItem lviEskiMasa = null;
-            foreach (ListViewItem item in lvwMasalar.Items)
-            {
-                if (item.Tag==e.TasinanSiparis)
-                {
-                    lviEskiMasa = item;
-                    break;
-                }
-            }
+            ListViewItem lviEskiMasa = MasaBul(e.EskiMasaNo);
             lviEskiMasa.Tag = e.EskiMasaNo;
             lviEskiMasa.ImageKey = "boş";
+
+
+            ListViewItem lviYeniMasa = MasaBul(e.YeniMasaNo);
+            lviYeniMasa.Tag = e.TasinanSiparis;
+            lviYeniMasa.ImageKey = "dolu";
         }
 
         private void tsmiGecmisSiparisler_Click(object sender, EventArgs e)
@@ -153,5 +151,20 @@ namespace KafeKod
         //    lvwMasalar.Items[hedefNo].ImageKey = "dolu";
         //    lvwMasalar.Items[hedefNo].Tag = kaynakNo;
         //}
+        private ListViewItem MasaBul(int masaNo)
+        {
+            foreach (ListViewItem item in lvwMasalar.Items)
+            {
+                if (item.Tag is int && (int)item.Tag==masaNo)
+                {
+                    return item;
+                }
+                else if (item.Tag is Siparis && ((Siparis)item.Tag).MasaNo==masaNo)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
     }
 }
