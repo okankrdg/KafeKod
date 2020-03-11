@@ -13,10 +13,10 @@ namespace KafeKod
 {
     public partial class UrunlerForm : Form
     {
-        KafeVeri db;
+        KafeContext db;
         BindingList<Urun> blurunler;
         //List<Urun> siraliUrun = new List<Urun>();
-        public UrunlerForm(KafeVeri kafeVeri)
+        public UrunlerForm(KafeContext kafeVeri)
         {
             db = kafeVeri;
             InitializeComponent();
