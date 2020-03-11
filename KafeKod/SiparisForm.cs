@@ -165,6 +165,7 @@ namespace KafeKod
                 var sipDetay = (SiparisDetay)seciliSatir.DataBoundItem;
                 db.SiparisDetaylar.Remove(sipDetay);
                 db.SaveChanges();
+                dgvSiparisDetaylari.DataSource = new BindingSource(siparis.SiparisDetaylar, null);
             }
             TutarGuncelle();
         }
