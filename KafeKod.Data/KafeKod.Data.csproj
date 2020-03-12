@@ -56,6 +56,14 @@
     <Compile Include="Migrations\202003111529043_ilk.designer.cs">
       <DependentUpon>202003111529043_ilk.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003121330595_modelbuilder.cs" />
+    <Compile Include="Migrations\202003121330595_modelbuilder.designer.cs">
+      <DependentUpon>202003121330595_modelbuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003121427059_stokeklendi.cs" />
+    <Compile Include="Migrations\202003121427059_stokeklendi.designer.cs">
+      <DependentUpon>202003121427059_stokeklendi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Siparis.cs" />
     <Compile Include="SiparisDetay.cs" />
@@ -69,6 +77,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202003111529043_ilk.resx">
       <DependentUpon>202003111529043_ilk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003121330595_modelbuilder.resx">
+      <DependentUpon>202003121330595_modelbuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003121427059_stokeklendi.resx">
+      <DependentUpon>202003121427059_stokeklendi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

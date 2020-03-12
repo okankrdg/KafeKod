@@ -14,7 +14,7 @@ namespace KafeKod
     public partial class UrunlerForm : Form
     {
         KafeContext db;
-        
+
         //List<Urun> siraliUrun = new List<Urun>();
         public UrunlerForm(KafeContext kafeVeri)
         {
@@ -24,23 +24,23 @@ namespace KafeKod
 
             //siraliUrun = blurunler.OrderBy(x => x.UrunAd).ToList();
             //blurunler = new BindingList<Urun>(siraliUrun);
-            dgvUrunler.DataSource = db.Urunler.OrderBy(x => x.UrunAd).ToList();
+            dgvUrunler.DataSource = new BindingSource(db.Urunler.OrderBy(x => x.UrunAd).ToList(), null);
 
         }
 
         private void btnEkle_Click(object sender, EventArgs e)
         {
             string urunAd = txtUrunAdi.Text.Trim();
-            if (urunAd=="")
+            if (urunAd == "")
             {
                 MessageBox.Show("Lütfen bir ürün adı giriniz.");
                 return;
             }
             db.Urunler.Add(new Urun { UrunAd = urunAd, BirimFiyat = nudBirimFiyat.Value });
             db.SaveChanges();
-            dgvUrunler.DataSource = db.Urunler.OrderBy(x => x.UrunAd).ToList();
-            
-            
+            dgvUrunler.DataSource = new BindingSource(db.Urunler.OrderBy(x => x.UrunAd).ToList(), null);
+
+
             //blurunler = new BindingList<Urun>(siraliUrun);
 
         }
@@ -53,9 +53,9 @@ namespace KafeKod
         private void dgvUrunler_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             //UrunAd'ı düzenliyorsa
-            if (e.ColumnIndex==0)
+            if (e.ColumnIndex == 0)
             {
-                if (((string)e.FormattedValue).Trim()=="")
+                if (((string)e.FormattedValue).Trim() == "")
                 {
                     dgvUrunler.Rows[e.RowIndex].ErrorText = "Ürün boş geçilemez";
                     e.Cancel = true;
@@ -63,9 +63,33 @@ namespace KafeKod
                 else
                 {
                     dgvUrunler.Rows[e.RowIndex].ErrorText = "";
-                    db.SaveChanges();
                 }
             }
+            db.SaveChanges();
+        }
+
+        private void dgvUrunler_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            Urun secili = (Urun)e.Row.DataBoundItem;
+            if (secili.SiparisDetaylar.Count > 0)
+            {
+                MessageBox.Show("Bu ürün stokta yok olarak silindi");
+                secili.StoktaYok = true;
+                e.Cancel = true;
+                return;
+            }
+            db.Urunler.Remove(secili);
+            db.SaveChanges();
+        }
+
+        private void UrunlerForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            txtUrunAdi.Focus();
+        }
+
+        private void UrunlerForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            db.SaveChanges();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace KafeKod
             InitializeComponent();
             dgvSiparisDetaylari.AutoGenerateColumns = false;
             MasaNoGuncelle();
-            cboUrun.DataSource = db.Urunler.ToList();
+            cboUrun.DataSource = db.Urunler.Where(x=>x.StoktaYok==false).ToList();
             TutarGuncelle();
             dgvSiparisDetaylari.DataSource = siparis.SiparisDetaylar;
             MasaNolariYukle();
